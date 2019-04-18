@@ -1,6 +1,10 @@
 <template>
 	<div>
 		<h1>{{ msg }}</h1>
+		<div>
+					<van-button type="info" @click="loginBtn">登录</van-button>
+				<van-button type="info" @click="registerBtn">注册</van-button>
+		</div>
 		<div class="wrapDiv">
 			<input type="text" class="leftDiv" ref="inputRef" placeholder="请输入" />
 			<div class="rightDiv">{{txt_data}}</div>
@@ -12,6 +16,7 @@
 
 <script>
 	import axios from 'axios'
+	import API_LIST from '@/APIList.config.js'
 	export default {
 		name: 'proShopCartDemo',
 		data() {
@@ -20,20 +25,28 @@
 				txt_data:''
 			}
 		},
+		
 		methods:{
+			loginBtn(){
+				
+			},
+			registerBtn(){
+				this.$router.push({path:"/register"})
+				//路由跳转新页面，在router。index.js里需要配置路由
+			},
 			sendBtn(){
 				let _val=this.$refs.inputRef.value;
 				//console.log(_val)
-				axios.get("http://localhost:5678/node_a",{
+				axios.get(API_LIST.node_a,{
 					params:{
-						xxval:_val
+						v_data:_val
 					}
 				});
 			},
 			getBtn(){
-				axios.get("http://localhost:5678/node_b").then(_d=>{
+				axios.get(API_LIST.node_b).then(_d=>{
 					console.log(_d.data)
-					this.txt_data=_d.data
+					this.txt_data=_d.data[0].name
 				});
 			}
 		}
